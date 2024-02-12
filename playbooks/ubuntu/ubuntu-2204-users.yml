@@ -1,0 +1,66 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Instalacion de aplicaciones y software base
+    ansible.builtin.apt:
+      name:
+        - wget
+        - curl
+        - ca-certificates
+        - vim-nox
+        - screen
+        - tmux
+        - nano
+      state: latest
+
+  - name: Asegurarse de que existe el grupo "Administrador"
+    ansible.builtin.group:
+      name: administrador
+      state: present
+
+  - name: Crear el usuario Administrador, asignarle el grupo, y crear una llave privada SSH
+    ansible.builtin.user:
+      name: administrador
+      generate_ssh_key: yes
+      ssh_key_bits: 4096
+      ssh_key_file: ".ssh/id_rsa"
+      groups: administrador, sudo
+      shell: /bin/bash
+      append: yes
+      
+  - name: Copiar archivo de llaves publicas de administradores
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/ssh/administrador-authorized_keys"
+      dest: "/home/administrador/.ssh/authorized_keys"
+      backup: no
+      owner: administrador
+      group: administrador
+      mode: 0600
+
+  - name: Crear una llave privada SSH a root
+    ansible.builtin.user:
+      name: root
+      generate_ssh_key: yes
+      ssh_key_bits: 4096
+      ssh_key_file: ".ssh/id_rsa"
+      state: present
+      force: no
+
+  - name: Copiar archivo de llaves publicas de masters
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/ssh/root-authorized_keys"
+      dest: "/root/.ssh/authorized_keys"
+      backup: no
+      owner: root
+      group: root
+      mode: 0600
+
+  - name: Copiar archivo de sudoers
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/sudo/administrador"
+      dest: "/etc/sudoers.d/administrador"
+      backup: no
+      owner: root
+      group: root
+      mode: 0644

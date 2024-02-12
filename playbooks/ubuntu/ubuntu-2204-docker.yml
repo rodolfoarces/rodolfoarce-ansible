@@ -1,0 +1,52 @@
+---
+- hosts: ubuntu2204
+  become: yes
+  tasks:
+  - name: Instalacion de aplicaciones y software base
+    ansible.builtin.apt:
+      name:
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+        - net-tools
+        - dnsutils
+        - iputils-ping
+      state: latest
+      
+  - name: Crear directorio de llave APT
+    ansible.builtin.file:
+      path: /etc/apt/keyrings
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+
+  - name: Copiar archivo de llave
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/apt/keyrings/docker.gpg"
+      dest: "/etc/apt/keyrings/docker.gpg"
+      backup: no
+      owner: root
+      group: root
+      mode: 0644
+      
+  - name: Copiar archivo de repositorio
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/apt/sources.list.d/docker-2204.list"
+      dest: "/etc/apt/sources.list.d/docker.list"
+      backup: no
+      owner: root
+      group: root
+      mode: 0644
+      
+  - name: Instalacion de docker engine y otros
+    ansible.builtin.apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-compose-plugin
+        - docker-compose
+      state: latest
+      update_cache: yes
