@@ -5,8 +5,11 @@ all:
         web00.rodolfoarce.local:
         web01.rodolfoarce.local:
         web02.rodolfoarce.local:
-        k01.rodolfoarce.local:
-        k02.rodolfoarce.local:
-        k03.rodolfoarce.local:
+      children:
+        ubuntu2204-k3s:
+          hosts:
+            k01.rodolfoarce.local:
+            k02.rodolfoarce.local:
+            k03.rodolfoarce.local:
       vars:
         ansible_python_interpreter=/usr/bin/python3

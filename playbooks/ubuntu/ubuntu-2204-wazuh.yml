@@ -1,0 +1,61 @@
+---
+- hosts: ubuntu2204
+  become: yes
+  tasks:
+  - name: Instalacion de aplicaciones y software base
+    ansible.builtin.apt:
+      name:
+        - gnupg
+        - apt-transport-https
+      state: latest
+      
+  - name: Crear directorio de llave APT
+    ansible.builtin.file:
+      path: /etc/apt/keyrings
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+
+  - name: Copiar archivo de llave
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/apt/keyrings/wazuh.gpg"
+      dest: "/etc/apt/keyrings/wazuh.gpg"
+      backup: no
+      owner: root
+      group: root
+      mode: 0644
+      
+  - name: Copiar archivo de repositorio
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/apt/sources.list.d/wazuh.list"
+      dest: "/etc/apt/sources.list.d/wazuh.list"
+      backup: no
+      owner: root
+      group: root
+      mode: 0644
+      
+  - name: Instalacion de agente wazuh
+    ansible.builtin.apt:
+      name:
+        - wazuh-agent=4.7.2-1
+      state: present
+      update_cache: yes
+
+  - name: Ingresar Ip del manager
+    ansible.builtin.replace:
+      path: "/var/ossec/etc/ossec.conf"
+      regexp: '(\s+)<address>MANAGER_IP</address>(\s+)'
+      replace: '\1<address>wazuh.rodolfoarce.local</address>\2'
+
+  - name: Comentar repositorio
+    ansible.builtin.replace:
+      path: "/etc/apt/sources.list.d/wazuh.list"
+      regexp: '^deb'
+      replace: '#deb'
+
+  - name: Iniciar servicio Wazuh agent
+    ansible.builtin.systemd:
+      name: wazuh-agent
+      state: started
+      enabled: yes
