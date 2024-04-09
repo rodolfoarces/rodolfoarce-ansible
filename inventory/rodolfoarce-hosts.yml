@@ -1,15 +1,18 @@
 all:
   children:
-    ubuntu2204:
-      hosts:
-        web00.rodolfoarce.local:
-        web01.rodolfoarce.local:
-        web02.rodolfoarce.local:
+    linux:
       children:
-        ubuntu2204-k3s:
+        ubuntu2204:
           hosts:
-            k01.rodolfoarce.local:
-            k02.rodolfoarce.local:
-            k03.rodolfoarce.local:
-      vars:
-        ansible_python_interpreter=/usr/bin/python3
+            web00.rodolfoarce.local:
+            web01.rodolfoarce.local:
+            web02.rodolfoarce.local:
+            revista.espy.cloud:
+          children:
+            ubuntu2204-k3s:
+              hosts:
+                k01.rodolfoarce.local:
+                k02.rodolfoarce.local:
+                k03.rodolfoarce.local:
+          vars:
+            ansible_python_interpreter=/usr/bin/python3

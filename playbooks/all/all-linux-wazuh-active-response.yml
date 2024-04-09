@@ -1,0 +1,13 @@
+---
+- hosts: linux
+  become: yes
+  tasks:
+
+  - name: Copiar script de remove-threat.sh para VirusTotal
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/../../files/wazuh/active-response/remove-threat.sh"
+      dest: "/var/ossec/active-response/bin/remove-threat.sh"
+      backup: no
+      owner: root
+      group: wazuh
+      mode: 0750
