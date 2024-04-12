@@ -4,6 +4,7 @@ all:
       children:
         ubuntu2204:
           hosts:
+            127.0.0.1:
             web00.rodolfoarce.local:
             web01.rodolfoarce.local:
             web02.rodolfoarce.local:
