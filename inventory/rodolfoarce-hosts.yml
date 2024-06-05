@@ -15,5 +15,12 @@ all:
                 k01.rodolfoarce.local:
                 k02.rodolfoarce.local:
                 k03.rodolfoarce.local:
+        ubuntu2404:
+          hosts:
+            127.0.0.1:
+          children:
+            ubuntu2404-docker:
+              hosts:
+                test01.rodolfoarce.com:
           vars:
             ansible_python_interpreter=/usr/bin/python3
