@@ -5,6 +5,14 @@ all:
     linux:
       hosts:
         127.0.0.1:
+        k01.rodolfoarce.local:
+        k02.rodolfoarce.local:
+        k03.rodolfoarce.local:
+        redmine01.rodolfoarce.local:
+        test01.rodolfoarce.local:
+        test02.rodolfoarce.local:
+        wazuh01.rodolfoarce.local:
+        web01.rodolfoarce.local:
       children:
         ubuntu:
           hosts:
@@ -14,7 +22,7 @@ all:
             k03.rodolfoarce.local:
             redmine01.rodolfoarce.local:
             test01.rodolfoarce.local:
-            test02.rodolfoarce.com:
+            test02.rodolfoarce.local:
             wazuh01.rodolfoarce.local:
             web01.rodolfoarce.local:
           children:
@@ -38,6 +46,6 @@ all:
               children:
                 ubuntu2404-docker:
                   hosts:
-                    test02.rodolfoarce.com:
+                    test02.rodolfoarce.local:
           vars:
             ansible_python_interpreter=/usr/bin/python3

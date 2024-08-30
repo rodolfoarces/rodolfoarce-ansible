@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: ubuntu
   become: yes
   tasks:
   - name: Instalacion de aplicaciones y software base
