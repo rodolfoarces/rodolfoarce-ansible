@@ -1,26 +1,43 @@
 all:
+  hosts:
+    127.0.0.1:
   children:
     linux:
+      hosts:
+        127.0.0.1:
       children:
-        ubuntu2204:
+        ubuntu:
           hosts:
             127.0.0.1:
-            web00.rodolfoarce.local:
+            k01.rodolfoarce.local:
+            k02.rodolfoarce.local:
+            k03.rodolfoarce.local:
+            redmine01.rodolfoarce.local:
+            test01.rodolfoarce.local:
+            test02.rodolfoarce.com:
+            wazuh01.rodolfoarce.local:
             web01.rodolfoarce.local:
-            web02.rodolfoarce.local:
-            revista.espy.cloud:
           children:
-            ubuntu2204-k3s:
+            ubuntu2204:
               hosts:
-                k01.rodolfoarce.local:
-                k02.rodolfoarce.local:
-                k03.rodolfoarce.local:
-        ubuntu2404:
-          hosts:
-            127.0.0.1:
-          children:
-            ubuntu2404-docker:
+                127.0.0.1:
+                redmine01.rodolfoarce.local:
+                test01.rodolfoarce.local:
+                wazuh01.rodolfoarce.local:
+                web01.rodolfoarce.local:
+              children:
+                ubuntu2204-k3s:
+                  hosts:
+                    127.0.0.1:
+                    k01.rodolfoarce.local:
+                    k02.rodolfoarce.local:
+                    k03.rodolfoarce.local:
+            ubuntu2404:
               hosts:
-                test01.rodolfoarce.com:
+                127.0.0.1:
+              children:
+                ubuntu2404-docker:
+                  hosts:
+                    test02.rodolfoarce.com:
           vars:
             ansible_python_interpreter=/usr/bin/python3
