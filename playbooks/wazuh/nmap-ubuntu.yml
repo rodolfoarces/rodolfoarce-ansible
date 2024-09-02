@@ -2,24 +2,25 @@
 - hosts: ubuntu
   become: yes
 
-  - name: Instalacion de la librería y software base
-    ansible.builtin.apt:
-      name:
-        - python3-nmap
-      state: latest
+  tasks:
+    - name: Instalacion de la librería y software base
+      ansible.builtin.apt:
+        name:
+          - python3-nmap
+        state: latest
 
-  - name: Crear directorio de scripts de Wazuh
-      ansible.builtin.file:
-        path: /opt/wazuh-scripts
-        state: directory
+    - name: Crear directorio de scripts de Wazuh
+        ansible.builtin.file:
+          path: /opt/wazuh-scripts
+          state: directory
+          owner: root
+          group: wazuh
+          mode: '0750'
+    
+    - name: Descargar el script de Nmap al directorio de scripts externos de Wazuh
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/rodolfoarces/wazuh-scripts/main/networking/nmapscan.py
+        dest: /opt/wazuh-scripts/nampscan.py
+        mode: '0550'
         owner: root
         group: wazuh
-        mode: '0750'
-  
-  - name: Descargar el script de Nmap al directorio de scripts externos de Wazuh
-    ansible.builtin.get_url:
-      url: https://raw.githubusercontent.com/rodolfoarces/wazuh-scripts/main/networking/nmapscan.py
-      dest: /opt/wazuh-scripts/nampscan.py
-      mode: '0550'
-      owner: root
-      group: wazuh
