@@ -7,15 +7,16 @@
       ansible.builtin.apt:
         name:
           - python3-nmap
+          - nmap
         state: latest
 
     - name: Crear directorio de scripts de Wazuh
-        ansible.builtin.file:
-          path: /opt/wazuh-scripts
-          state: directory
-          owner: root
-          group: wazuh
-          mode: '0750'
+      ansible.builtin.file:
+        path: /opt/wazuh-scripts
+        state: directory
+        owner: root
+        group: wazuh
+        mode: '0750'
     
     - name: Descargar el script de Nmap al directorio de scripts externos de Wazuh
       ansible.builtin.get_url:
