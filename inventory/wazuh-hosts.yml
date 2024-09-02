@@ -27,7 +27,15 @@ all:
                 server01.wazuh.local:
                 server02.wazuh.local:
                 test01.wazuh.local:
+                test02.wazuh.local:
+                wazuh01.wazuh.local:
+                wazuh02.wazuh.local:
               children:
+                ubuntu2204-wazuh-aio:
+                  hosts:
+                    127.0.0.1:
+                    wazuh01.wazuh.local:
+                    wazuh02.wazuh.local:
                 ubuntu2204-wazuh-server:
                   hosts:
                     127.0.0.1:
