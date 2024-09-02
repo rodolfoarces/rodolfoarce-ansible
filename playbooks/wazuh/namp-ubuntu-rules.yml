@@ -6,7 +6,7 @@
     - name: Descargar reglas para Nmap al directorio de reglas de Wazuh
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/rodolfoarces/wazuh-scripts/main/rules/nmapscan.xml
-        dest: /var/ossec/etc/rules/nampscan.xml
+        dest: /var/ossec/etc/rules/nmapscan.xml
         mode: '0440'
         owner: wazuh
         group: wazuh
