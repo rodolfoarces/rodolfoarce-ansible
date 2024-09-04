@@ -1,0 +1,12 @@
+---
+- hosts: linux
+  become: yes
+  
+  tasks:
+  - name: Descargar el script remove-threat.sh para VirusTotal al scripts externos de Wazuh
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/rodolfoarces/wazuh-scripts/main/active-response/remove-threat.sh
+        dest: /var/ossec/active-response/bin/remove-threat.sh
+        mode: '0550'
+        owner: root
+        group: wazuh
