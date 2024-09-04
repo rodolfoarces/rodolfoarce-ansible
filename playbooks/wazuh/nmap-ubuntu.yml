@@ -21,7 +21,14 @@
     - name: Descargar el script de Nmap al directorio de scripts externos de Wazuh
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/rodolfoarces/wazuh-scripts/main/networking/nmapscan.py
-        dest: /opt/wazuh-scripts/nampscan.py
+        dest: /opt/wazuh-scripts/nmapscan.py
         mode: '0550'
         owner: root
         group: wazuh
+
+    - name: Habilitar ejecucion de comandos desde log collector
+      ansible.builtin.lineinfile:
+        state: present
+        path: /var/ossec/etc/local_internal_options.conf
+        regexp: '^\s*logcollector.remote_commands\s*'
+        line: 'logcollector.remote_commands=1'
