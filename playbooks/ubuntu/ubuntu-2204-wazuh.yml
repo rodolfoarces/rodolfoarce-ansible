@@ -1,6 +1,9 @@
 ---
 - hosts: ubuntu2204
   become: yes
+  vars:
+    WAZUH_VERSION: "4.9.2-1"
+    WAZUH_MANAGER: "wazuh.wazuh.local"
   tasks:
   - name: Instalacion de aplicaciones y software base
     ansible.builtin.apt:
@@ -38,7 +41,7 @@
   - name: Instalacion de agente wazuh
     ansible.builtin.apt:
       name:
-        - wazuh-agent=4.7.2-1
+        - wazuh-agent={{ WAZUH_VERSION}} 
       state: present
       update_cache: yes
 
@@ -46,7 +49,7 @@
     ansible.builtin.replace:
       path: "/var/ossec/etc/ossec.conf"
       regexp: '(\s+)<address>MANAGER_IP</address>(\s+)'
-      replace: '\1<address>wazuh.rodolfoarce.local</address>\2'
+      replace: '\1<address>{{ WAZUH_MANAGER }}</address>\2'
 
   - name: Comentar repositorio
     ansible.builtin.replace:

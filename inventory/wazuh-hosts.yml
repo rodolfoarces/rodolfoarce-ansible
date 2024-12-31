@@ -29,6 +29,7 @@ all:
                 server01.wazuh.local:
                 server02.wazuh.local:
                 test01.wazuh.local:
+                test02.wazuh.local:
               children:
                 ubuntu2204-wazuh-server:
                   hosts:
@@ -42,18 +43,15 @@ all:
                   hosts:
                     127.0.0.1:
                     test01.wazuh.local:
+                    test02.wazuh.local:
             ubuntu2404:
               hosts:
                 127.0.0.1:
                 docker00.wazuh.local:
-                test02.wazuh.local:
               children:
                 ubuntu2404-wazuh-agent:
                   hosts:
                     127.0.0.1:
-                    test02.wazuh.local:
                 ubuntu2404-docker:
                   hosts:
-                    docker00.wazuh.local:
-                      #vars:
-                      #ansible_python_interpreter=/usr/bin/python3
+                    docker00.wazuh.local: 
