@@ -1,0 +1,16 @@
+---
+- hosts: ubuntu
+  become: yes
+  tasks:
+  # Download and install Wazuh installation script
+  - name: Download Wazuh installation script
+    ansible.builtin.get_url:
+      url: https://packages.wazuh.com/4.14/wazuh-install.sh
+      dest: /root/wazuh-install.sh
+      mode: '0755'
+  # Run the installation script with the -a flag to install all components (manager, agent, and filebeat)
+  - name: Install the wazuh infrastructure
+    ansible.builtin.shell: /root/wazuh-install.sh -a
+    become: true
+    become_user: root
+

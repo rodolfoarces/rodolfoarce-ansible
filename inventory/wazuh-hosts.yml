@@ -5,53 +5,18 @@ all:
     linux:
       hosts:
         127.0.0.1:
-        indexer01.wazuh.local:
-        server01.wazuh.local:
-        server02.wazuh.local:
-        test01.wazuh.local:
-        test02.wazuh.local:
-        docker00.wazuh.local:
+        vm0:
       children:
         ubuntu:
           hosts:
             127.0.0.1:
-            indexer01.wazuh.local:
-            server01.wazuh.local:
-            server02.wazuh.local:
-            test01.wazuh.local:
-            test02.wazuh.local:
-            docker00.wazuh.local:
+            vm0:
           children:
             ubuntu2204:
               hosts:
                 127.0.0.1:
-                indexer01.wazuh.local:
-                server01.wazuh.local:
-                server02.wazuh.local:
-                test01.wazuh.local:
-                test02.wazuh.local:
-              children:
-                ubuntu2204-wazuh-server:
-                  hosts:
-                    127.0.0.1:
-                    server01.wazuh.local:
-                    server02.wazuh.local:
-                ubuntu2204-wazuh-indexer:
-                  hosts:
-                    indexer01.wazuh.local:
-                ubuntu2204-wazuh-agent:
-                  hosts:
-                    127.0.0.1:
-                    test01.wazuh.local:
-                    test02.wazuh.local:
             ubuntu2404:
               hosts:
                 127.0.0.1:
-                docker00.wazuh.local:
-              children:
-                ubuntu2404-wazuh-agent:
-                  hosts:
-                    127.0.0.1:
-                ubuntu2404-docker:
-                  hosts:
-                    docker00.wazuh.local: 
+                vm0:
+                  ansible_host: 192.168.255.2

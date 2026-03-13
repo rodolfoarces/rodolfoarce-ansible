@@ -1,0 +1,3 @@
+administrator  ALL=(ALL:ALL) NOPASSWD: ALL
+%administrator ALL=(ALL:ALL) NOPASSWD: ALL
+

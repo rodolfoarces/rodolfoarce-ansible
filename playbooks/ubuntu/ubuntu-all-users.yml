@@ -14,28 +14,28 @@
         - nano
       state: latest
 
-  - name: Asegurarse de que existe el grupo "Administrador"
+  - name: Asegurarse de que existe el grupo "Administrator"
     ansible.builtin.group:
-      name: administrador
+      name: administrator
       state: present
 
-  - name: Crear el usuario Administrador, asignarle el grupo, y crear una llave privada SSH
+  - name: Crear el usuario Administrator, asignarle el grupo, y crear una llave privada SSH
     ansible.builtin.user:
-      name: administrador
+      name: administrator
       generate_ssh_key: yes
       ssh_key_bits: 4096
       ssh_key_file: ".ssh/id_rsa"
-      groups: administrador, sudo
+      groups: administrator, sudo
       shell: /bin/bash
       append: yes
       
   - name: Copiar archivo de llaves publicas de administradores
     ansible.builtin.copy:
-      src: "{{ playbook_dir }}/../../files/ssh/administrador-authorized_keys"
-      dest: "/home/administrador/.ssh/authorized_keys"
+      src: "{{ playbook_dir }}/../../files/ssh/administrator-authorized_keys"
+      dest: "/home/administrator/.ssh/authorized_keys"
       backup: no
-      owner: administrador
-      group: administrador
+      owner: administrator
+      group: administrator
       mode: 0600
 
   - name: Crear una llave privada SSH a root
@@ -58,8 +58,8 @@
 
   - name: Copiar archivo de sudoers
     ansible.builtin.copy:
-      src: "{{ playbook_dir }}/../../files/sudo/administrador"
-      dest: "/etc/sudoers.d/administrador"
+      src: "{{ playbook_dir }}/../../files/sudo/administrator"
+      dest: "/etc/sudoers.d/administrator"
       backup: no
       owner: root
       group: root
