@@ -6,11 +6,13 @@ all:
       hosts:
         127.0.0.1:
         vm0:
+        vm1:
       children:
         ubuntu:
           hosts:
             127.0.0.1:
             vm0:
+            vm1:
           children:
             ubuntu2204:
               hosts:
@@ -20,3 +22,5 @@ all:
                 127.0.0.1:
                 vm0:
                   ansible_host: 192.168.255.2
+                vm1:
+                  ansible_host: 192.168.255.3
